@@ -1,6 +1,32 @@
 #include "main.h"
 
 /**
+ * is_equal - Check if the environment variable equals the passed name
+ * @name: The name to search for
+ * @environ_var: The current environment variable
+ *
+ * Return: The value of the environment variable
+ *	   If the variable equals the name, or NULL if the
+ *	   name and variable are not equal
+ */
+char *is_equal(char *environ_var, const char *name)
+{
+	int i = 0;
+
+	while (name[i])
+	{
+		if (environ_var[i] != name[i])
+			return (NULL);
+		i++;
+	}
+
+	if (environ_var[i] == '=')
+		return (environ_var + i + 1);
+
+	return (NULL);
+}
+
+/**
  * _getenv - Get an invironment variable
  * @name: The name of the variable
  * @offset: If "name" is found this member will be
@@ -29,32 +55,6 @@ char *_getenv(const char *name, int *offset)
 		}
 		i++;
 	}
-
-	return (NULL);
-}
-
-/**
- * is_equal - Check if the environment variable equals the passed name
- * @name: The name to search for
- * @environ_var: The current environment variable
- *
- * Return: The value of the environment variable
- *	   If the variable equals the name, or NULL if the
- *	   name and variable are not equal
- */
-char *is_equal(char *environ_var, const char *name)
-{
-	int i = 0;
-
-	while (name[i])
-	{
-		if (environ_var[i] != name[i])
-			return (NULL);
-		i++;
-	}
-
-	if (environ_var[i] == '=')
-		return (environ_var + i + 1);
 
 	return (NULL);
 }
