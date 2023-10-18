@@ -2,33 +2,24 @@
 #define MAIN_H 
 
 /* "File inclusions" */ 
+#include <string.h> 
+#include <signal.h> 
+#include <stddef.h> 
+#include <limits.h> 
+#include <errno.h> 
 #include <stdio.h> 
 #include <unistd.h> 
 #include <sys/types.h> 
 #include <sys/stat.h> 
 #include <sys/wait.h> 
 #include <stdlib.h> 
-#include <string.h> 
-#include <signal.h> 
-#include <stddef.h> 
-#include <limits.h> 
-#include <errno.h> 
+
 
 /* "Environment variable" */ 
 extern char **environ; 
 
 
 /* "structs and typedefs" */ 
-/** 
- * struct dir_s - A new type called dir_t for struct dir_s 
- * @directory: The directory name 
- * @next: A ponter to the next node 
- */ 
-typedef struct dir_s 
-{ 
-	char *directory; 
-	struct dir_s *next; 
-} dir_t; 
 /** 
  * struct alias_s - A new type called alias_t for struct alias_s 
  * @name: The alias name 
@@ -41,18 +32,19 @@ typedef struct alias_s
 	char *value; 
 	struct alias_s *next; 
 } alias_t; 
+/** 
+ * struct dir_s - A new type called dir_t for struct dir_s 
+ * @directory: The directory name 
+ * @next: A ponter to the next node 
+ */ 
+typedef struct dir_s 
+{ 
+	char *directory; 
+	struct dir_s *next; 
+} dir_t; 
 
 
 /* "Aliases" */ 
-/** 
- * add_alias_end - Add a new alias at the end of an aliases linked list 
- * @head: A pointer to a pointer to the first node in the linked list 
- * @name: The name of the alias to put inside the node 
- * @value: The value of the alias to put inside the node 
- * 
- * Return: A pointer to the new node in the linked list 
- */ 
-alias_t *add_alias_end(alias_t **head, const char *name, const char *value); 
 /** 
  * search_alias - search if the alias is in the aliases list 
  * @alias: The alias to find 
@@ -62,21 +54,16 @@ alias_t *add_alias_end(alias_t **head, const char *name, const char *value);
  *           otherwise - NULL 
  */ 
 alias_t *search_alias(alias_t **head, char *alias); 
+
 /** 
- * create_alias - Add the new alias to the aliases linked list 
- * @alias: The alias to add 
- * @head: The head of the linked list 
+ * add_alias_end - Add a new alias at the end of an aliases linked list 
+ * @head: A pointer to a pointer to the first node in the linked list 
+ * @name: The name of the alias to put inside the node 
+ * @value: The value of the alias to put inside the node 
  * 
- * Return: void 
+ * Return: A pointer to the new node in the linked list 
  */ 
-void create_alias(alias_t **head, char *alias); 
-/** 
- * print_alias - Print the passed alias 
- * @alias: The alias to be printed 
- * 
- * Return: void 
- */ 
-void print_alias(const alias_t *alias); 
+alias_t *add_alias_end(alias_t **head, const char *name, const char *value); 
 /** 
  * print_specific_alias - Search for an alias and print it 
  * @alias: The alias to print 
@@ -92,6 +79,22 @@ void print_specific_alias(alias_t **head, char *alias);
  * Return: The number of nodes 
  */ 
 size_t print_aliases(alias_t **h); 
+/** 
+ * create_alias - Add the new alias to the aliases linked list 
+ * @alias: The alias to add 
+ * @head: The head of the linked list 
+ * 
+ * Return: void 
+ */ 
+void create_alias(alias_t **head, char *alias); 
+/** 
+ * print_alias - Print the passed alias 
+ * @alias: The alias to be printed 
+ * 
+ * Return: void 
+ */ 
+void print_alias(const alias_t *alias); 
+
 /** 
  * free_list - Free a list_t list 
  * @head: A pointer to the linked list to be freed 
